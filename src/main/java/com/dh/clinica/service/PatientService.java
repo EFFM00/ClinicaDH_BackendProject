@@ -30,4 +30,8 @@ public class PatientService {
         patientRepository.deleteById(id);
     }
 
+    public Patient updatePatient(Patient patient){
+        return patientRepository.save(patient);
+    }
+
 }

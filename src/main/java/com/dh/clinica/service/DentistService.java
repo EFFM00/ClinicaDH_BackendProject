@@ -31,4 +31,8 @@ public class DentistService {
         dentistRepository.deleteById(id);
     }
 
+    public Dentist updateDentist(Dentist dentist){
+        return dentistRepository.save(dentist);
+    }
+
 }
