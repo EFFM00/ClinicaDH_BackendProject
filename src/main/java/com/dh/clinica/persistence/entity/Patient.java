@@ -1,9 +1,12 @@
 package com.dh.clinica.persistence.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,14 +25,19 @@ public class Patient {
 
     private String dateAdmission;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "residence_id")
+    private Residence residence;
+
     public Patient() {
     }
 
-    public Patient(String name, String lastname, String dni, String dateAdmission) {
+    public Patient(String name, String lastname, String dni, String dateAdmission, Residence residence) {
         this.name = name;
         this.lastname = lastname;
         this.dni = dni;
         this.dateAdmission = dateAdmission;
+        this.residence = residence;
     }
 
     public Long getId() {
@@ -70,6 +78,14 @@ public class Patient {
 
     public void setDateAdmission(String dateAdmission) {
         this.dateAdmission = dateAdmission;
+    }
+
+    public Residence getResidence() {
+        return residence;
+    }
+
+    public void setResidence(Residence residence) {
+        this.residence = residence;
     }
 
     @Override

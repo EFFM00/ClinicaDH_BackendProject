@@ -1,7 +1,7 @@
 package com.dh.clinica.controller;
 
-import com.dh.clinica.persistence.entity.Dentist;
 import com.dh.clinica.persistence.entity.Patient;
+import com.dh.clinica.persistence.entity.Residence;
 import com.dh.clinica.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
