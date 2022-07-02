@@ -34,7 +34,7 @@ public class DentistController {
         return ResponseEntity.ok(dentist);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<Dentist> updateDentist(@RequestBody Dentist dentist) {
         ResponseEntity<Dentist> response = null;
 

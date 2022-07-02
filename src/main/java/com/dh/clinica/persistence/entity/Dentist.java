@@ -1,22 +1,32 @@
 package com.dh.clinica.persistence.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "dentist")
 public class Dentist {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="dentistSequence",sequenceName="dentistSequence", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dentistSequence")
     private Long id;
 
     private String name;
     private String lastname;
     private Integer register;
+
+    @OneToMany(mappedBy = "dentist", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Turn> turns = new HashSet<>();
 
     public Dentist(){
     }

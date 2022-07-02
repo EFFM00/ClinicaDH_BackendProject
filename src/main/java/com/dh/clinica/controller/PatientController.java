@@ -41,7 +41,7 @@ public class PatientController {
         return ResponseEntity.ok(patientService.savePatient(patient));
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<Patient> updatePatient(@RequestBody Patient patient) {
         ResponseEntity<Patient> response = null;
 
