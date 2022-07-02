@@ -12,7 +12,7 @@ import java.util.Optional;
 public class PatientService {
 
     @Autowired
-    private PatientRepository patientRepository;
+    PatientRepository patientRepository;
 
     public List<Patient> findAllPatient(){
         return patientRepository.findAll();

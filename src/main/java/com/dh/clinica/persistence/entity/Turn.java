@@ -29,12 +29,12 @@ public class Turn {
     private String date;
 
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dentist_id")
     private Dentist dentist;
 

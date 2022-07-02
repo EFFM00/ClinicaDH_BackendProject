@@ -34,13 +34,13 @@ public class TurnController {
     private DentistService dentistService;
 
     @GetMapping
-    public List<Turn> findAllTurns() {
-        return turnService.findAllTurns();
+    public ResponseEntity<List<Turn>> findAllTurns() {
+        return ResponseEntity.ok(turnService.findAllTurns());
     }
 
     @PostMapping("/new")
     public ResponseEntity<Turn>  registerNewTurn(@RequestBody Turn turn){
-        ResponseEntity<Turn> response = null;
+        ResponseEntity<Turn> response;
 
         if(patientService.findPatientById(turn.getPatient().getId()).isPresent() && dentistService.findDentistById(turn.getDentist().getId()).isPresent()){
             response = ResponseEntity.ok(turnService.saveTurn(turn));

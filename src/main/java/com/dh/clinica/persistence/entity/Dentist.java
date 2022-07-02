@@ -1,12 +1,9 @@
 package com.dh.clinica.persistence.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.HashSet;
@@ -25,8 +22,8 @@ public class Dentist {
     private String lastname;
     private Integer register;
 
-    @OneToMany(mappedBy = "dentist", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Turn> turns = new HashSet<>();
+    //@OneToMany(mappedBy = "dentist", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //private Set<Turn> turns = new HashSet<>();
 
     public Dentist(){
     }

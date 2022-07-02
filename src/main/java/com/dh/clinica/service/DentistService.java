@@ -13,7 +13,7 @@ import java.util.Optional;
 public class DentistService {
 
     @Autowired
-    private DentistRepository dentistRepository;
+    DentistRepository dentistRepository;
 
     public List<Dentist> findAllDentist() {
         return dentistRepository.findAll();

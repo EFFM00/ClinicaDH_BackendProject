@@ -12,7 +12,7 @@ import java.util.Optional;
 public class TurnService {
 
     @Autowired
-    private TurnRepository turnRepository;
+    TurnRepository turnRepository;
 
     public List<Turn> findAllTurns(){
         return turnRepository.findAll();

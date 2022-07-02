@@ -36,8 +36,8 @@ public class Patient {
     @JoinColumn(name = "residence_id")
     private Residence residence;
 
-    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Turn> turns = new HashSet<>();
+//    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    private Set<Turn> turns = new HashSet<>();
 
     public Patient() {
     }
