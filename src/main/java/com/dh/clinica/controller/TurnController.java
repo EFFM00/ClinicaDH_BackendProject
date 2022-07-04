@@ -6,6 +6,7 @@ import com.dh.clinica.persistence.entity.Turn;
 import com.dh.clinica.service.DentistService;
 import com.dh.clinica.service.PatientService;
 import com.dh.clinica.service.TurnService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +34,11 @@ public class TurnController {
     @Autowired
     private DentistService dentistService;
 
+    Logger logger = Logger.getLogger(DentistController.class);
+
     @GetMapping
     public ResponseEntity<List<Turn>> findAllTurns() {
+        logger.info("Se listaron todos los pacientes");
         return ResponseEntity.ok(turnService.findAllTurns());
     }
 
@@ -50,16 +54,15 @@ public class TurnController {
         return response;
     }
 
-    @PutMapping
-    public ResponseEntity<Turn> updateTurn(@RequestBody Turn turn) {
-        ResponseEntity<Turn> response = null;
-
-        if(turn.getId() != null && turnService.findTurnById(turn.getId()).isPresent()){
-            response = ResponseEntity.ok(turnService.saveTurn(turn));
+    @GetMapping("/{id}")
+    public ResponseEntity<Turn> getTurnById(@PathVariable Long id){
+        Turn turn = turnService.findTurnById(id).orElse(null);
+        if(turn != null){
+            logger.info("Se buscó el turno: " + turnService.findTurnById(id));
         } else {
-            response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            logger.error("No se encontró el turno");
         }
-        return response;
+        return ResponseEntity.ok(turn);
     }
 
     @DeleteMapping("/{id}")
@@ -68,8 +71,23 @@ public class TurnController {
 
         if(turnService.findTurnById(id).isPresent()){
             turnService.deleteTurnById(id);
+            logger.info("Se eliminó el turno: ");
             response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("Deleted");
         } else {
+            response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return response;
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Turn> updateDentist(@RequestBody Turn turn, @PathVariable Long id) {
+        ResponseEntity<Turn> response = null;
+
+        if(turn.getId() != null && turnService.findTurnById(turn.getId()).isPresent() && turn.getId()==id){
+            logger.info("Se actualizó el turno: " + turn);
+            response = ResponseEntity.ok(turnService.updateTurn(turn));
+        } else {
+            logger.error("Fallo al intentar actualizar el turno: " + turnService.findTurnById(turn.getId()));
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return response;

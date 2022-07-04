@@ -3,6 +3,7 @@ package com.dh.clinica.service;
 import com.dh.clinica.persistence.entity.Dentist;
 import com.dh.clinica.persistence.repository.DentistRepository;
 import com.dh.clinica.persistence.repository.PatientRepository;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,4 @@ public class DentistService {
     public Dentist updateDentist(Dentist dentist){
         return dentistRepository.save(dentist);
     }
-
 }

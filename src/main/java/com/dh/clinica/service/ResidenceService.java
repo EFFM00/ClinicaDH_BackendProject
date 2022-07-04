@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ResidenceService {
@@ -16,8 +17,8 @@ public class ResidenceService {
     public List<Residence> findAllResidences(){
         return residenceRepository.findAll();
     }
-    public Residence saveResidente(Residence residence) {
-        return residenceRepository.save(residence);
+    public Optional<Residence> findResidenteById(Long id) {
+        return residenceRepository.findById(id);
     }
 
     public void deleteResidenceById(Long id){
