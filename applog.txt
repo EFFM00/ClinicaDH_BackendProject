@@ -9,3 +9,12 @@ INFO    2022-07-06 13:22:39,531 [http-nio-8090-exec-3] com.dh.clinica.controller
 INFO    2022-07-06 13:22:43,992 [http-nio-8090-exec-2] com.dh.clinica.controller.DentistController  - Se listaron todos los odontólogos
 INFO    2022-07-06 13:22:54,473 [http-nio-8090-exec-10] com.dh.clinica.controller.DentistController  - Se listaron todos los odontólogos
 INFO    2022-07-06 13:23:01,290 [http-nio-8090-exec-9] com.dh.clinica.controller.DentistController  - Se listaron todos los odontólogos
+INFO    2022-07-06 13:56:06,123 [http-nio-8090-exec-9] com.dh.clinica.controller.DentistController  - Se listaron todos los odontólogos
+INFO    2022-07-08 16:34:56,960 [http-nio-8090-exec-4] com.dh.clinica.controller.DentistController  - Se listaron todos los odontólogos
+INFO    2022-07-08 16:35:02,022 [http-nio-8090-exec-1] com.dh.clinica.controller.DentistController  - Se listaron todos los odontólogos
+INFO    2022-07-08 16:35:46,659 [http-nio-8090-exec-9] com.dh.clinica.controller.DentistController  - Se listaron todos los odontólogos
+INFO    2022-07-08 16:35:51,901 [http-nio-8090-exec-2] com.dh.clinica.controller.DentistController  - Se listaron todos los odontólogos
+INFO    2022-07-08 16:36:56,460 [http-nio-8090-exec-4] com.dh.clinica.controller.DentistController  - Se listaron todos los odontólogos
+INFO    2022-07-08 17:20:40,581 [http-nio-8090-exec-7] com.dh.clinica.controller.DentistController  - Se listaron todos los odontólogos
+INFO    2022-07-08 17:20:53,983 [http-nio-8090-exec-4] com.dh.clinica.controller.DentistController  - Se listaron todos los odontólogos
+INFO    2022-07-08 17:21:04,045 [http-nio-8090-exec-5] com.dh.clinica.controller.DentistController  - Se listaron todos los odontólogos

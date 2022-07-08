@@ -17,13 +17,12 @@ import java.util.Collections;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class AppUser implements UserDetails {
 
     @Id
     @SequenceGenerator(name="user_sequence",sequenceName="user_sequence", allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     private Long id;
-
     private String name;
     private String email;
     private String username;
@@ -31,10 +30,10 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRol userRol;
 
-    public User(){
+    public AppUser(){
     }
 
-    public User(String name, String email, String username, String password, UserRol userRol) {
+    public AppUser(String name, String email, String username, String password, UserRol userRol) {
         this.name = name;
         this.email = email;
         this.username = username;
