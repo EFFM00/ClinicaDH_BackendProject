@@ -24,8 +24,16 @@ public class AppUserService implements UserDetailsService {
         } else{
             throw new UsernameNotFoundException("Email de usuario no encontrado");
         }
-        //return userRepository.findByEmail(email).orElseThrow((() -> new UsernameNotFoundException("Username not found")));
     }
+
+    /*
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return new User("foo", "foo", new ArrayList<>());
+    }
+
+     */
+
 
     public AppUser saveUser(AppUser user){
         return userRepository.save(user);
