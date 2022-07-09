@@ -1,27 +1,17 @@
 package com.dh.clinica.controller;
 
-import com.dh.clinica.jwt.AuthenticationRequest;
-import com.dh.clinica.jwt.AuthenticationResponse;
+import com.dh.clinica.persistence.entity.AuthenticationRequest;
+import com.dh.clinica.persistence.entity.AuthenticationResponse;
 import com.dh.clinica.jwt.JwtUtil;
-import com.dh.clinica.login.AppUser;
 import com.dh.clinica.login.AppUserService;
-import com.dh.clinica.persistence.entity.Patient;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,15 +36,9 @@ public class UserController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<String> home(){
-        return ResponseEntity.ok("Bienvenido al sistema");
+        return ResponseEntity.ok("<h1>Bienvenido al sistema</h1>");
     }
 
-    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
-    public ResponseEntity<String> welcome(){
-        return ResponseEntity.ok("Bienvenido al sistema, masita");
-    }
-
-    /*
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken (@RequestBody AuthenticationRequest authenticationRequest) throws Exception{
         try {
@@ -69,6 +53,7 @@ public class UserController {
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
+    /*
     @PostMapping("/")
     public ResponseEntity<AppUser> registerUser(@RequestBody AppUser user){
         logger.info("Se creó un nuevo usuario con email: " + user.getEmail());

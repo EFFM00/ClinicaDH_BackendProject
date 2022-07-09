@@ -1,8 +1,7 @@
 package com.dh.clinica.controller;
 
 import com.dh.clinica.persistence.entity.Patient;
-import com.dh.clinica.persistence.entity.Residence;
-import com.dh.clinica.service.DentistService;
+import com.dh.clinica.persistence.entity.Turn;
 import com.dh.clinica.service.PatientService;
 import com.dh.clinica.service.ResidenceService;
 import org.apache.log4j.Logger;

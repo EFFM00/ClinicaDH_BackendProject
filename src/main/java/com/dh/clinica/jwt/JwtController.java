@@ -1,5 +1,7 @@
 package com.dh.clinica.jwt;
 
+import com.dh.clinica.persistence.entity.AuthenticationRequest;
+import com.dh.clinica.persistence.entity.AuthenticationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

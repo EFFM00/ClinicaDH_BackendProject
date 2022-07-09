@@ -1,4 +1,4 @@
-package com.dh.clinica.jwt;
+package com.dh.clinica.persistence.entity;
 
 public class AuthenticationRequest {
 
