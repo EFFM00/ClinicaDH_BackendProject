@@ -16,9 +16,13 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String password = passwordEncoder.encode("password");
-        String password2 = passwordEncoder.encode("password2");
+        String password2 = passwordEncoder.encode("password");
 
+        //Estos métodos pueden estar en el service y luego en el controller para que se registre el usuario
         userRepository.save(new AppUser("Elena", "effm@mail.com", "effm", password, UserRol.ADMIN));
         userRepository.save(new AppUser("Alan", "alan@mail.com", "alan", password2, UserRol.USER));
+
+        //De esta manera
+        userRepository.save(new AppUser("aa", "aa@mail.com", "aa", passwordEncoder.encode("password"), UserRol.ADMIN));
     }
 }

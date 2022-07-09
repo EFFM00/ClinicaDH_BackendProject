@@ -101,6 +101,7 @@ public class AppUser implements UserDetails {
         this.userRol = userRol;
     }
 
+    //Permite conocer a qué roles puede acceder un usuario
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userRol.name());

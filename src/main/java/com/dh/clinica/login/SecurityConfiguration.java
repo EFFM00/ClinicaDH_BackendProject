@@ -27,17 +27,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf()
+                .disable()
                 .authorizeRequests()
-                .antMatchers("/user/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated().and()
-                .formLogin();
+                .antMatchers("/turnos/**").hasRole("USER")
+                .anyRequest().authenticated()
+                .and().formLogin()
+                .and().logout();
     }
 
-    @Bean
     @Override
+    @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }

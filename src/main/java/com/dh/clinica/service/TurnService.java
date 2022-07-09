@@ -14,6 +14,10 @@ public class TurnService {
     @Autowired
     TurnRepository turnRepository;
 
+    public List<Turn> getTurnByPatient(Long id){
+        return
+    }
+
     public List<Turn> findAllTurns(){
         return turnRepository.findAll();
     }

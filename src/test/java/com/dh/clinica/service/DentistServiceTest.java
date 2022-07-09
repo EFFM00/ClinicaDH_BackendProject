@@ -27,6 +27,7 @@ class DentistServiceTest {
         Assert.assertTrue(dentist.getId() != null);
     }
 
+
     @Test
     public void findAll(){
         List<Dentist> listDentist = this.dentistService.findAllDentist();
@@ -50,3 +51,5 @@ class DentistServiceTest {
 
     }
 }
+
+// Odontologo odontologoMayorId = odontologos.stream().max(Comparator.comparing(Odontologo::getId)).orElseThrow(NoSuchElementException::new);;

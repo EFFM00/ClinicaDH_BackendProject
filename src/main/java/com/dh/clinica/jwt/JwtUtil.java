@@ -19,9 +19,8 @@ public class JwtUtil {
         return extractUserName(token);
     }
 
-    public String extractClaimUsername(String token){
-        Claims claims = extractAllClaims(token);
-        return claims.getSubject();
+    public Date extractExpiration(String token) {
+        return extractClaimDate(token);
     }
 
     public Date extractClaimDate(String token){
@@ -29,13 +28,18 @@ public class JwtUtil {
         return claims.getExpiration();
     }
 
-    public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userDetails.getUsername());
+    public String extractClaimUsername(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims.getSubject();
     }
 
     private Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+    }
+
+    public String generateToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        return createToken(claims, userDetails.getUsername());
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
@@ -52,9 +56,4 @@ public class JwtUtil {
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
-
-    public Date extractExpiration(String token) {
-        return extractClaimDate(token);
-    }
-
 }
