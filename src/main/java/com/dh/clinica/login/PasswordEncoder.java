@@ -1,4 +1,4 @@
-package com.dh.clinica.jwt;
+package com.dh.clinica.login;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,5 +1,6 @@
 package com.dh.clinica.service;
 
+import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.persistence.entity.Dentist;
 import com.dh.clinica.persistence.repository.DentistRepository;
 import com.dh.clinica.persistence.repository.PatientRepository;
@@ -24,7 +25,10 @@ public class DentistService {
         return dentistRepository.save(dentist);
     }
 
-    public Optional<Dentist> findDentistById(Long id){
+    public Optional<Dentist> findDentistById(Long id) throws ResourceNotFoundException {
+        if(findDentistById(id).isEmpty()){
+            throw  new ResourceNotFoundException("No existe odontologo con id: "+id);
+        }
         return dentistRepository.findById(id);
     }
 

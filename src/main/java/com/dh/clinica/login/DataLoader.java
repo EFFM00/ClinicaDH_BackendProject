@@ -1,5 +1,7 @@
 package com.dh.clinica.login;
 
+import com.dh.clinica.persistence.entity.AppUser;
+import com.dh.clinica.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -15,6 +17,7 @@ public class DataLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
         String password = passwordEncoder.encode("password");
         String password2 = passwordEncoder.encode("password");
 

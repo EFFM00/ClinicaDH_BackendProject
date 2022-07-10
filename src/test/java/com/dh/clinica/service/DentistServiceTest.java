@@ -1,5 +1,6 @@
 package com.dh.clinica.service;
 
+import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.persistence.entity.Dentist;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -36,14 +37,14 @@ class DentistServiceTest {
     }
 
     @Test
-    public void finDentist(){
+    public void finDentist() throws ResourceNotFoundException {
         Dentist dentist = this.createData();
         Optional<Dentist> searchDentist = this.dentistService.findDentistById(dentist.getId());
         Assert.assertTrue(!searchDentist.isEmpty());
     }
 
     @Test
-    public void deleteDentist(){
+    public void deleteDentist() throws ResourceNotFoundException {
         Dentist dentist = this.createData();
         this.dentistService.deleteDentistById(dentist.getId());
 

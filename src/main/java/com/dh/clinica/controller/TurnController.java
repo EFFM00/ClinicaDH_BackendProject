@@ -1,5 +1,6 @@
 package com.dh.clinica.controller;
 
+import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.persistence.entity.Dentist;
 import com.dh.clinica.persistence.entity.Patient;
 import com.dh.clinica.persistence.entity.Turn;
@@ -43,7 +44,7 @@ public class TurnController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Turn>  registerNewTurn(@RequestBody Turn turn){
+    public ResponseEntity<Turn>  registerNewTurn(@RequestBody Turn turn) throws ResourceNotFoundException {
         ResponseEntity<Turn> response;
 
         if(patientService.findPatientById(turn.getPatient().getId()).isPresent() && dentistService.findDentistById(turn.getDentist().getId()).isPresent()){
@@ -66,7 +67,7 @@ public class TurnController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTurn(@PathVariable Long id){
+    public ResponseEntity<String> deleteTurn(@PathVariable Long id) throws ResourceNotFoundException {
         ResponseEntity<String> response = null;
 
         if(turnService.findTurnById(id).isPresent()){

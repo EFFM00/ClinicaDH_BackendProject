@@ -1,5 +1,6 @@
 package com.dh.clinica.service;
 
+import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.persistence.entity.Turn;
 import com.dh.clinica.persistence.repository.TurnRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,10 @@ public class TurnService {
         return turnRepository.findById(id);
     }
 
-    public void deleteTurnById(Long id){
+    public void deleteTurnById(Long id) throws ResourceNotFoundException {
+        if(findTurnById(id).isEmpty()){
+            throw new ResourceNotFoundException("No existe turno con id: " + id);
+        }
         turnRepository.deleteById(id);
     }
 

@@ -1,6 +1,6 @@
 package com.dh.clinica.login;
 
-import com.dh.clinica.jwt.JwtRequestFilter;
+import com.dh.clinica.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,9 +20,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private AppUserService appUserService;
 
     @Autowired
-    private JwtRequestFilter requestFilter;
-
-    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -31,13 +28,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/turns/**").permitAll()
-                .antMatchers("/patients/**").hasRole("ADMIN")
-                .antMatchers("/residences/**").hasRole("ADMIN")
-                .antMatchers("/dentists/**").hasRole("ADMIN")
-                .antMatchers("/authenticate/**").denyAll()
+                .antMatchers("/patients/**").permitAll()
+                .antMatchers("/residences/**").permitAll()
+                .antMatchers("/dentists/**").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
-                .and().logout();
+                .and().logout()
+                .permitAll();
     }
 
     @Override

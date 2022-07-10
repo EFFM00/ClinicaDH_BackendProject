@@ -1,5 +1,6 @@
 package com.dh.clinica.controller;
 
+import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.persistence.entity.Patient;
 import com.dh.clinica.persistence.entity.Turn;
 import com.dh.clinica.service.PatientService;
@@ -69,7 +70,7 @@ public class PatientController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePatient(@PathVariable Long id) {
+    public ResponseEntity<String> deletePatient(@PathVariable Long id) throws ResourceNotFoundException {
         ResponseEntity<String> response = null;
 
         if (patientService.findPatientById(id).isPresent()) {

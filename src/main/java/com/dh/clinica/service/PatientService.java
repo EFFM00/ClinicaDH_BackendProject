@@ -1,5 +1,6 @@
 package com.dh.clinica.service;
 
+import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.persistence.entity.Patient;
 import com.dh.clinica.persistence.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,10 @@ public class PatientService {
         return patientRepository.findById(id);
     }
 
-    public void deletePatientById(Long id){
+    public void deletePatientById(Long id) throws ResourceNotFoundException {
+        if(findPatientById(id).isEmpty()){
+            throw new ResourceNotFoundException("No existe un paciente con id: " + id);
+        }
         patientRepository.deleteById(id);
     }
 

@@ -1,5 +1,6 @@
 package com.dh.clinica.controller;
 
+import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.persistence.entity.Dentist;
 import com.dh.clinica.service.DentistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +28,14 @@ public class DentistController {
 
     Logger logger = Logger.getLogger(DentistController.class);
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<Dentist>> findAllDentists() {
         logger.info("Se listaron todos los odontólogos");
         return ResponseEntity.ok(dentistService.findAllDentist());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Dentist> getDentistById(@PathVariable Long id){
+    public ResponseEntity<Dentist> getDentistById(@PathVariable Long id) throws ResourceNotFoundException {
         Dentist dentist = dentistService.findDentistById(id).orElse(null);
         if(dentist != null){
             logger.info("Se buscó al odontólogo: " + dentistService.findDentistById(id));
@@ -45,7 +46,7 @@ public class DentistController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Dentist> updateDentist(@RequestBody Dentist dentist, @PathVariable Long id) {
+    public ResponseEntity<Dentist> updateDentist(@RequestBody Dentist dentist, @PathVariable Long id) throws ResourceNotFoundException {
         ResponseEntity<Dentist> response = null;
 
         if(dentist.getId() != null && dentistService.findDentistById(dentist.getId()).isPresent() && dentist.getId()==id){
@@ -65,7 +66,7 @@ public class DentistController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteDentist(@PathVariable Long id) {
+    public ResponseEntity<String> deleteDentist(@PathVariable Long id) throws ResourceNotFoundException {
         ResponseEntity<String> response;
 
         if (dentistService.findDentistById(id).isPresent()) {

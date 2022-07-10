@@ -1,5 +1,6 @@
-package com.dh.clinica.login;
+package com.dh.clinica.persistence.entity;
 
+import com.dh.clinica.login.UserRol;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
