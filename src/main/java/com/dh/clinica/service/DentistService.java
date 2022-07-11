@@ -25,10 +25,7 @@ public class DentistService {
         return dentistRepository.save(dentist);
     }
 
-    public Optional<Dentist> findDentistById(Long id) throws ResourceNotFoundException {
-        if(findDentistById(id).isEmpty()){
-            throw  new ResourceNotFoundException("No existe odontologo con id: "+id);
-        }
+    public Optional<Dentist> findDentistById(Long id) {
         return dentistRepository.findById(id);
     }
 

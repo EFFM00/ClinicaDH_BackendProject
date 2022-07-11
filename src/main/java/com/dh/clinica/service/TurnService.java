@@ -28,9 +28,6 @@ public class TurnService {
     }
 
     public void deleteTurnById(Long id) throws ResourceNotFoundException {
-        if(findTurnById(id).isEmpty()){
-            throw new ResourceNotFoundException("No existe turno con id: " + id);
-        }
         turnRepository.deleteById(id);
     }
 

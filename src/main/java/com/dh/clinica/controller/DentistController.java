@@ -28,7 +28,7 @@ public class DentistController {
 
     Logger logger = Logger.getLogger(DentistController.class);
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Dentist>> findAllDentists() {
         logger.info("Se listaron todos los odontólogos");
         return ResponseEntity.ok(dentistService.findAllDentist());
@@ -38,22 +38,24 @@ public class DentistController {
     public ResponseEntity<Dentist> getDentistById(@PathVariable Long id) throws ResourceNotFoundException {
         Dentist dentist = dentistService.findDentistById(id).orElse(null);
         if(dentist != null){
-            logger.info("Se buscó al odontólogo: " + dentistService.findDentistById(id));
+            logger.info("Se buscó al odontólogo con id: " + id);
         } else {
-            logger.error("No se encontró al odontólogo");
+            logger.error("No se encontró al odontólogo con id: " + id);
+            throw new ResourceNotFoundException("No existe un odontólogo con id: " + id);
+
         }
         return ResponseEntity.ok(dentist);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Dentist> updateDentist(@RequestBody Dentist dentist, @PathVariable Long id) throws ResourceNotFoundException {
+    public ResponseEntity<Dentist> updateDentist(@RequestBody Dentist dentist, @PathVariable Long id) {
         ResponseEntity<Dentist> response = null;
 
         if(dentist.getId() != null && dentistService.findDentistById(dentist.getId()).isPresent() && dentist.getId()==id){
-            logger.info("Se actualizó al odontólogo: " + dentist);
+            logger.info("Se actualizó al odontólogo con id: " + dentist.getId());
             response = ResponseEntity.ok(dentistService.updateDentist(dentist));
         } else {
-            logger.error("Fallo al intentar actualizar odontólogo: " + dentistService.findDentistById(dentist.getId()));
+            logger.error("Fallo al intentar actualizar odontólogo: " + dentist.getId());
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return response;
@@ -61,21 +63,21 @@ public class DentistController {
 
     @PostMapping("/new")
     public ResponseEntity<Dentist> registerNewDentist(@RequestBody Dentist dentist) {
-        logger.info("Se agregó al odontólogo: " + dentist);
+        logger.info("Se agregó al odontólogo con id: " + dentist.getId());
         return ResponseEntity.ok(dentistService.saveDentist(dentist));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteDentist(@PathVariable Long id) throws ResourceNotFoundException {
-        ResponseEntity<String> response;
+        ResponseEntity<String> response = null;
 
         if (dentistService.findDentistById(id).isPresent()) {
             dentistService.deleteDentistById(id);
-            logger.info("Se eliminó al odontólogo: " + dentistService.findDentistById(id));
+            logger.info("Se eliminó al odontólogo con id: " + id);
             response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("Deleted");
         } else {
-            logger.error("Fallo al intentar borrar al odontólogo: " + dentistService.findDentistById(id));
-            response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            logger.error("Fallo al intentar borrar al odontólogo con id: " + id);
+            throw new ResourceNotFoundException("No existe un odontólogo con id: " + id);
         }
         return response;
     }

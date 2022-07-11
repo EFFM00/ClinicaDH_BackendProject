@@ -44,7 +44,7 @@ public class TurnController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Turn>  registerNewTurn(@RequestBody Turn turn) throws ResourceNotFoundException {
+    public ResponseEntity<Turn>  registerNewTurn(@RequestBody Turn turn) {
         ResponseEntity<Turn> response;
 
         if(patientService.findPatientById(turn.getPatient().getId()).isPresent() && dentistService.findDentistById(turn.getDentist().getId()).isPresent()){
@@ -56,12 +56,14 @@ public class TurnController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Turn> getTurnById(@PathVariable Long id){
+    public ResponseEntity<Turn> getTurnById(@PathVariable Long id) throws ResourceNotFoundException {
         Turn turn = turnService.findTurnById(id).orElse(null);
         if(turn != null){
-            logger.info("Se buscó el turno: " + turnService.findTurnById(id));
+            logger.info("Se buscó el turno con id: " + id);
         } else {
             logger.error("No se encontró el turno");
+            throw new ResourceNotFoundException("No existe un turno con id: " + id);
+
         }
         return ResponseEntity.ok(turn);
     }
@@ -72,10 +74,10 @@ public class TurnController {
 
         if(turnService.findTurnById(id).isPresent()){
             turnService.deleteTurnById(id);
-            logger.info("Se eliminó el turno: ");
+            logger.info("Se eliminó el turno con id: " + id);
             response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("Deleted");
         } else {
-            response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            throw new ResourceNotFoundException("No existe un turno con id: " + id);
         }
         return response;
     }
@@ -85,10 +87,10 @@ public class TurnController {
         ResponseEntity<Turn> response = null;
 
         if(turn.getId() != null && turnService.findTurnById(turn.getId()).isPresent() && turn.getId()==id){
-            logger.info("Se actualizó el turno: " + turn);
+            logger.info("Se actualizó el turno: " + turn.getId());
             response = ResponseEntity.ok(turnService.updateTurn(turn));
         } else {
-            logger.error("Fallo al intentar actualizar el turno: " + turnService.findTurnById(turn.getId()));
+            logger.error("Fallo al intentar actualizar el turno con id: " + turn.getId());
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return response;

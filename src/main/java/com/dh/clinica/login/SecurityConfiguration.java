@@ -1,6 +1,8 @@
 package com.dh.clinica.login;
 
+import com.dh.clinica.controller.UserController;
 import com.dh.clinica.service.AppUserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,15 +24,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    Logger logger = Logger.getLogger(UserController.class);
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf()
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/turns/**").permitAll()
-                .antMatchers("/patients/**").permitAll()
-                .antMatchers("/residences/**").permitAll()
-                .antMatchers("/dentists/**").permitAll()
+                .antMatchers("/patients/**").hasAuthority("ADMIN")
+                .antMatchers("/dentists/**").hasAuthority("ADMIN")
+                .antMatchers("/residences/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and().formLogin()
                 .and().logout()

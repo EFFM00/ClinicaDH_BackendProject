@@ -27,10 +27,7 @@ public class PatientService {
         return patientRepository.findById(id);
     }
 
-    public void deletePatientById(Long id) throws ResourceNotFoundException {
-        if(findPatientById(id).isEmpty()){
-            throw new ResourceNotFoundException("No existe un paciente con id: " + id);
-        }
+    public void deletePatientById(Long id) {
         patientRepository.deleteById(id);
     }
 

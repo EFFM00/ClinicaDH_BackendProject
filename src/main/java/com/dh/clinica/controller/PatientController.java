@@ -2,7 +2,6 @@ package com.dh.clinica.controller;
 
 import com.dh.clinica.exceptions.ResourceNotFoundException;
 import com.dh.clinica.persistence.entity.Patient;
-import com.dh.clinica.persistence.entity.Turn;
 import com.dh.clinica.service.PatientService;
 import com.dh.clinica.service.ResidenceService;
 import org.apache.log4j.Logger;
@@ -39,19 +38,20 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> getPatientById(@PathVariable Long id){
+    public ResponseEntity<Patient> getPatientById(@PathVariable Long id) throws ResourceNotFoundException{
         Patient patient = patientService.findPatientById(id).orElse(null);
         if(patient != null){
-            logger.info("Se buscó al paciente: " + patientService.findPatientById(id));
+            logger.info("Se buscó al paciente con id: " + id);
         } else {
-            logger.info("No se encontró al paciente");
+            logger.info("No se encontró al paciente con id: " + id);
+            throw new ResourceNotFoundException("No existe un paciente con id: " + id);
         }
         return ResponseEntity.ok(patient);
     }
 
     @PostMapping("/new")
     public ResponseEntity<Patient> registerNewPatient(@RequestBody Patient patient) {
-        logger.info("Se agregó al paciente: " + patient);
+        logger.info("Se agregó al paciente con id: " + patient.getId());
         return ResponseEntity.ok(patientService.savePatient(patient));
     }
 
@@ -60,10 +60,10 @@ public class PatientController {
         ResponseEntity<Patient> response = null;
 
         if(patient.getId() != null && patientService.findPatientById(patient.getId()).isPresent() && patient.getId()==id){
-            logger.info("Se actualizó al paciente: " + patient);
+            logger.info("Se actualizó al paciente con id: " + patient.getId());
             response = ResponseEntity.ok(patientService.updatePatient(patient));
         } else {
-            logger.error("Fallo al intentar actualizar odontólogo: " + patientService.findPatientById(patient.getId()));
+            logger.error("Fallo al intentar actualizar paciente con id: " + patient.getId());
             response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return response;
@@ -75,11 +75,10 @@ public class PatientController {
 
         if (patientService.findPatientById(id).isPresent()) {
             patientService.deletePatientById(id);
-            logger.info("Se eliminó al paciente: " + patientService.findPatientById(id));
+            logger.info("Se eliminó al paciente: " + id);
             response = ResponseEntity.status(HttpStatus.NO_CONTENT).body("Deleted");
         } else {
-            logger.error("Fallo al intentar borrar al paciente: " + patientService.findPatientById(id));
-            response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            throw new ResourceNotFoundException("No existe un paciente con id: " + id);
         }
         return response;
     }
