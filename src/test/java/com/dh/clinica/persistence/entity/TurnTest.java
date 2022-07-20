@@ -9,14 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class TurnTest {
 
-    Dentist dentist;
-    Patient patient;
-
-    @BeforeAll
-    public void initAll(){
-        dentist = new Dentist("Prueba", "Test", 22421);
-        patient = new Patient("Prueba", "Test", "534234", "11/04", new Residence("Calle", "calle2", "calle3", "calle4") );
-    }
+    Dentist dentist = new Dentist("Prueba", "Test", 22421);;
+    Patient patient = new Patient("Prueba", "Test", "534234", "11/04", new Residence("Calle", "calle2", "calle3", "calle4") );;
 
     @Test
     public void createObjectTurn(){

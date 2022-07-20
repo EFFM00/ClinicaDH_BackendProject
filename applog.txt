@@ -50,3 +50,4 @@ INFO    2022-07-10 21:16:40,384 [http-nio-8090-exec-1] com.dh.clinica.controller
 ERROR   2022-07-10 21:16:45,849 [http-nio-8090-exec-3] com.dh.clinica.controller.DentistController  - No se encontró el turno
 INFO    2022-07-10 21:16:49,375 [http-nio-8090-exec-4] com.dh.clinica.controller.DentistController  - Se listaron todos los pacientes
 INFO    2022-07-10 21:17:34,426 [http-nio-8090-exec-3] com.dh.clinica.controller.DentistController  - Se listaron todos los pacientes
+INFO    2022-07-20 19:19:14,523 [http-nio-8080-exec-9] com.dh.clinica.controller.DentistController  - Se listaron todos los pacientes

@@ -1,6 +1,7 @@
 package com.dh.clinica.login;
 
 import com.dh.clinica.controller.UserController;
+import com.dh.clinica.login.filter.JwtFilterRequest;
 import com.dh.clinica.service.AppUserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -24,6 +27,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private JwtFilterRequest jwtFilterRequest;
+
     Logger logger = Logger.getLogger(UserController.class);
 
     @Override
@@ -31,14 +37,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
+                .antMatchers("/**/authenticate").permitAll()
                 .antMatchers("/turns/**").permitAll()
                 .antMatchers("/patients/**").hasAuthority("ADMIN")
                 .antMatchers("/dentists/**").hasAuthority("ADMIN")
                 .antMatchers("/residences/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().formLogin()
                 .and().logout()
                 .permitAll();
+
+        http.addFilterBefore(jwtFilterRequest, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

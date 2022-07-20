@@ -1,0 +1,60 @@
+package com.dh.clinica.login.filter;
+
+import com.dh.clinica.login.JwtUtil;
+import com.dh.clinica.service.AppUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import javax.persistence.Access;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+//Este filtro se ejecuta cada vez que hay una petición
+@Component
+public class JwtFilterRequest extends OncePerRequestFilter {
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private AppUserService appUserService;
+
+    //Verifica si en el encabezado hay un token y si el token es correcto
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String authorizationHeader = request.getHeader("Authorization");
+
+        //Preguntamos si ese authentication es diferente a null y si empieza con bearer, ya que empiezan así
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")){
+
+            //Desde el caracter 7 se obtiene el jwt en sí
+            String jwt = authorizationHeader.substring(7);
+            String username = jwtUtil.extractUsername(jwt);
+
+
+            //Si este usuario es diferente a nulo y no está debidamente logueado
+            if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
+
+                //Si el usuario existe dentro del sistema
+                UserDetails userDetails = appUserService.loadUserByUsername(username);
+
+                if(jwtUtil.validateToken(jwt, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+            }
+        }
+
+        filterChain.doFilter(request, response);
+    }
+}
